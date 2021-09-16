@@ -6,7 +6,7 @@
 /*   By: tzeck <tzeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:26:57 by tzeck             #+#    #+#             */
-/*   Updated: 2021/09/15 20:18:32 by tzeck            ###   ########.fr       */
+/*   Updated: 2021/09/16 11:17:27 by tzeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 void	handle_sigusr(int sig)
 {
 	if (sig == SIGUSR1)
-		printf("%s\n", "1");
+		printf("0");
 	else
-		printf("%s\n", "2");
+		printf("1");
 }
 
 int	main(void)
@@ -49,12 +49,16 @@ int	main(void)
 	// 	usleep(1000000);
 	// }
 #pragma endregion
-	struct sigaction sa;
+	// struct sigaction sa;
 
-	sa.__sigaction_u.__sa_handler = &handle_sigusr;
-	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);
-	printf("server pid: %d\n", getpid()); // print out pid for client
+	// sa.__sigaction_u.__sa_handler = &handle_sigusr;
+	// sigaction(SIGUSR1, &sa, NULL);
+	// sigaction(SIGUSR2, &sa, NULL);
+	int pid = getpid();
+
+	printf("server pid: %d\n", pid); // print out pid for client
+	signal(SIGUSR1, handle_sigusr);
+	signal(SIGUSR2, handle_sigusr);
 	while(1) // to get multible calls without stopping
 		pause(); //waits until a signal arrives
 	return (1);
