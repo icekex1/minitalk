@@ -6,7 +6,7 @@
 /*   By: tzeck <tzeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:26:57 by tzeck             #+#    #+#             */
-/*   Updated: 2021/09/17 12:14:43 by tzeck            ###   ########.fr       */
+/*   Updated: 2021/09/17 19:27:15 by tzeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,32 +63,33 @@ char	*print_string(char *string)
 
 void	handle_sigusr(int sig)
 {
-	static char c;
-	static int bits;
-	static char *string;
+	// static char c;
+	// static int bits;
+	// static char *string;
 	
-	bits = 0;
-	c = 0xFF;
-	if (sig == SIGUSR1)
-		c ^= 0x80 >> bits;
-	else if (sig == SIGUSR2)
-		c |= 0x80 >> bits;
-	if (++bits == 8)
-	{
-		if (c)
-			ft_strlcat(string, &c, 1);
-		else
-		{
-			string = print_string(string);
-			bits = 0;
-			c = 0xFF;
-		}
-	}
-
+	// bits = 0;
+	// c = 0xFF;
 	// if (sig == SIGUSR1)
-	// 	write(1, "0", 1);
+	// 	c ^= 0x80 >> bits;
 	// else if (sig == SIGUSR2)
-	// 	write(1, "1", 1);
+	// 	c |= 0x80 >> bits;
+	// write(1, "works", 1);
+	// if (bits++ == 7)
+	// {
+	// 	if (c)
+	// 		ft_strlcat(string, &c, 1);
+	// 	else
+	// 	{
+	// 		string = print_string(string);
+	// 		bits = 0;
+	// 		c = 0xFF;
+	// 	}
+	// }
+
+	if (sig == SIGUSR1)
+		write(1, "0", 1);
+	else if (sig == SIGUSR2)
+		write(1, "1", 1);
 }
 
 int	main(void)
