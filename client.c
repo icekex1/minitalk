@@ -6,7 +6,7 @@
 /*   By: tzeck <tzeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:27:01 by tzeck             #+#    #+#             */
-/*   Updated: 2021/09/18 19:37:04 by tzeck            ###   ########.fr       */
+/*   Updated: 2021/09/18 19:56:45 by tzeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int	send_bit(int n, int pid)
 {
-	usleep(10000);
+	usleep(80);
 	if (n == 0)
 		kill(pid, SIGUSR1);
 	else if (n == 1)

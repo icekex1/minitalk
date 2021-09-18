@@ -6,11 +6,12 @@
 /*   By: tzeck <tzeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:26:57 by tzeck             #+#    #+#             */
-/*   Updated: 2021/09/18 19:35:46 by tzeck            ###   ########.fr       */
+/*   Updated: 2021/09/18 21:14:11 by tzeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+#include <stdio.h>
 
 int	convert(int n)
 {
@@ -26,17 +27,22 @@ int	convert(int n)
 		n = n / 10;
 		base = base * 2;
 	}
-	return (dec);
+	return (dec - 1);
 }
 
 void	bin_to_char(char *s)
 {
 	int		n;
-	char	c;
 
-	n = ft_atoi(s);
+	n = ft_atoi(s); //problem is here :)
+	ft_putnbr_fd(n, 1);
 	n = convert(n);
-	ft_putchar_fd(n, 1);
+	// ft_putstr_fd("test2: ", 1);
+	// ft_putnbr_fd(n, 1);
+	char c = n;
+	write(1, &c, 1);
+	// ft_putchar_fd('\n', 1);
+	// ft_putchar_fd(n, 1);
 }
 
 void	handle_sigusr(int sig)
@@ -74,10 +80,11 @@ int	main(void)
 	sa.__sigaction_u.__sa_handler = &handle_sigusr;
 	ft_putstr_fd("server pid: ", 1);
 	ft_putnbr_fd(pid, 1);
+	ft_putchar_fd('\n', 1);
 	while (1)
 	{
-		sigaction(SIGUSR2, &sa, NULL);
 		sigaction(SIGUSR1, &sa, NULL);
+		sigaction(SIGUSR2, &sa, NULL);
 		pause();
 	}
 	return (1);
