@@ -6,7 +6,7 @@
 /*   By: tzeck <tzeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:26:57 by tzeck             #+#    #+#             */
-/*   Updated: 2021/09/18 13:37:15 by tzeck            ###   ########.fr       */
+/*   Updated: 2021/09/18 14:08:40 by tzeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,30 @@
 #include <signal.h>
 #include <string.h>
 #include "minitalk.h"
+#include <math.h>
 
-// void bin_to_char(char *s)
-// {
-// 	int	n;
-// 	char c;
+void	ft_putchar(char c)
+{
+	write(1, &c, sizeof(char));
+}
 
-// 	n = atoi(s);
-// 	n += 0b00000000;
-// 	c = n;
-// 	write(1, &c, 1);
-	
-// }
+void        ft_putnbr(int nbr)
+{
+    if (nbr < 0)
+    {
+        ft_putchar('-');
+        ft_putnbr(-nbr);
+    }
+    else if (nbr > 9)
+    {
+        ft_putnbr(nbr / 10);
+        ft_putnbr(nbr % 10);
+    }
+    else
+    {
+        ft_putchar(nbr + '0');
+    }
+}
 
 void	ft_putstr_fd(char *s, int fd)
 {
@@ -42,6 +54,32 @@ void	ft_putstr_fd(char *s, int fd)
 	}
 }
 
+int	convert(int n) 
+{
+	int	base;
+	int	rem;
+	int	dec;
+
+	base = 1;
+	while (n > 0)
+	{
+		rem = n % 10;
+		dec = dec + rem * base;
+		n = n / 10;
+		base = base * 2;
+	}
+	return (dec);
+}
+
+void bin_to_char(char *s)
+{
+	int		n;
+	char	c;
+
+	n = atoi(s);
+	n = convert(n);
+	ft_putchar(n);
+}
 void	handle_sigusr(int sig)
 {
 	static int i;
@@ -60,7 +98,7 @@ void	handle_sigusr(int sig)
 	if (i == 8)
 	{
 		string[i + 1] = '\0';
-		ft_putstr_fd(string, 1);
+		bin_to_char(string);
 		free(string);
 		string = NULL;
 		i = 0;
