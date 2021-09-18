@@ -6,7 +6,7 @@
 /*   By: tzeck <tzeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:26:57 by tzeck             #+#    #+#             */
-/*   Updated: 2021/09/17 19:27:15 by tzeck            ###   ########.fr       */
+/*   Updated: 2021/09/18 13:37:15 by tzeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,17 @@
 #include <string.h>
 #include "minitalk.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
-{
-	unsigned int	src_len;
-	unsigned int	dst_len;
-	unsigned int	i;
+// void bin_to_char(char *s)
+// {
+// 	int	n;
+// 	char c;
 
-	src_len = strlen(src);
-	dst_len = 0;
-	if (dstsize == 0)
-		return (src_len);
-	while (dst_len < dstsize && dst[dst_len])
-		dst_len++;
-	if (dstsize <= dst_len)
-		return (dstsize + src_len);
-	i = 0;
-	while (dstsize && (--dstsize - dst_len) && src[i])
-	{
-		dst[dst_len + i] = src[i];
-		i++;
-	}
-	dst[dst_len + i] = '\0';
-	return (src_len + dst_len);
-}
+// 	n = atoi(s);
+// 	n += 0b00000000;
+// 	c = n;
+// 	write(1, &c, 1);
+	
+// }
 
 void	ft_putstr_fd(char *s, int fd)
 {
@@ -54,42 +42,34 @@ void	ft_putstr_fd(char *s, int fd)
 	}
 }
 
-char	*print_string(char *string)
-{
-	ft_putstr_fd(string, 1);
-	free(string);
-	return (NULL);
-}
-
 void	handle_sigusr(int sig)
 {
-	// static char c;
-	// static int bits;
-	// static char *string;
+	static int i;
+	static char *string;
 	
-	// bits = 0;
-	// c = 0xFF;
-	// if (sig == SIGUSR1)
-	// 	c ^= 0x80 >> bits;
-	// else if (sig == SIGUSR2)
-	// 	c |= 0x80 >> bits;
-	// write(1, "works", 1);
-	// if (bits++ == 7)
-	// {
-	// 	if (c)
-	// 		ft_strlcat(string, &c, 1);
-	// 	else
-	// 	{
-	// 		string = print_string(string);
-	// 		bits = 0;
-	// 		c = 0xFF;
-	// 	}
-	// }
+	if (string == NULL)
+		string = malloc(9 * sizeof(char));
+	if (i < 8)
+	{
+		if (sig == SIGUSR1)
+			string[i] = '0';
+		else if (sig == SIGUSR2)
+			string[i] = '1';
+		i++;
+	}
+	if (i == 8)
+	{
+		string[i + 1] = '\0';
+		ft_putstr_fd(string, 1);
+		free(string);
+		string = NULL;
+		i = 0;
+	}
 
-	if (sig == SIGUSR1)
-		write(1, "0", 1);
-	else if (sig == SIGUSR2)
-		write(1, "1", 1);
+	// if (sig == SIGUSR1)
+	// 	write(1, "0", 1);
+	// else if (sig == SIGUSR2)
+	// 	write(1, "1", 1);
 }
 
 int	main(void)
