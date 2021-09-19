@@ -6,7 +6,7 @@
 /*   By: tzeck <tzeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:26:57 by tzeck             #+#    #+#             */
-/*   Updated: 2021/09/18 21:14:11 by tzeck            ###   ########.fr       */
+/*   Updated: 2021/09/19 11:24:09 by tzeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	convert(int n)
 	int	dec;
 
 	base = 1;
+	rem = 0;
+	dec = 0;
 	while (n > 0)
 	{
 		rem = n % 10;
@@ -27,22 +29,16 @@ int	convert(int n)
 		n = n / 10;
 		base = base * 2;
 	}
-	return (dec - 1);
+	return (dec);
 }
 
 void	bin_to_char(char *s)
 {
 	int		n;
 
-	n = ft_atoi(s); //problem is here :)
-	ft_putnbr_fd(n, 1);
+	n = ft_atoi(s);
 	n = convert(n);
-	// ft_putstr_fd("test2: ", 1);
-	// ft_putnbr_fd(n, 1);
-	char c = n;
-	write(1, &c, 1);
-	// ft_putchar_fd('\n', 1);
-	// ft_putchar_fd(n, 1);
+	ft_putchar_fd(n, 1);
 }
 
 void	handle_sigusr(int sig)
