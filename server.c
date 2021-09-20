@@ -6,7 +6,7 @@
 /*   By: tzeck <tzeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:26:57 by tzeck             #+#    #+#             */
-/*   Updated: 2021/09/19 11:24:09 by tzeck            ###   ########.fr       */
+/*   Updated: 2021/09/20 09:30:58 by tzeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	convert(int n)
 
 void	bin_to_char(char *s)
 {
-	int		n;
+	int	n;
 
 	n = ft_atoi(s);
 	n = convert(n);
@@ -70,7 +70,6 @@ int	main(void)
 {
 	struct sigaction	sa;
 	pid_t				pid;
-	static char			*s;
 
 	pid = getpid();
 	sa.__sigaction_u.__sa_handler = &handle_sigusr;

@@ -6,7 +6,7 @@
 /*   By: tzeck <tzeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:27:01 by tzeck             #+#    #+#             */
-/*   Updated: 2021/09/18 19:56:45 by tzeck            ###   ########.fr       */
+/*   Updated: 2021/09/20 09:30:15 by tzeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,15 @@ int	main(int argc, char **argv)
 	int		i;
 	char	*s;
 
-	pid = ft_atoi(argv[1]);
-	s = ft_strdup(argv[2]);
-	while (s[i] != '\0')
-		base_two(s[i++], pid);
-	return (1);
+	i = 0;
+	if (argc != 3)
+		ft_putstr_fd("Wrong number of arguments!", 1);
+	else
+	{
+		pid = ft_atoi(argv[1]);
+		s = ft_strdup(argv[2]);
+		while (s[i] != '\0')
+			base_two(s[i++], pid);
+		return (1);
+	}
 }
