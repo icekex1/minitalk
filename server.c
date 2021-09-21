@@ -6,12 +6,11 @@
 /*   By: tzeck <tzeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:26:57 by tzeck             #+#    #+#             */
-/*   Updated: 2021/09/20 09:30:58 by tzeck            ###   ########.fr       */
+/*   Updated: 2021/09/21 12:09:39 by tzeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-#include <stdio.h>
 
 int	convert(int n)
 {
@@ -41,13 +40,22 @@ void	bin_to_char(char *s)
 	ft_putchar_fd(n, 1);
 }
 
-void	handle_sigusr(int sig)
+char	*string_alloc(char *string)
+{
+	string = malloc(9 * sizeof(char));
+	if (string == NULL)
+		return (NULL);
+	return (string);
+}
+
+void	handle_sigusr(int sig, siginfo_t *info, void *context)
 {
 	static int	i;
 	static char	*string;
 
+	(void)context;
 	if (string == NULL)
-		string = malloc(9 * sizeof(char));
+		string = string_alloc(string);
 	if (i < 8)
 	{
 		if (sig == SIGUSR1)
@@ -64,6 +72,8 @@ void	handle_sigusr(int sig)
 		string = NULL;
 		i = 0;
 	}
+	if (i == 0)
+		kill(info->si_pid, SIGUSR1);
 }
 
 int	main(void)
@@ -72,7 +82,7 @@ int	main(void)
 	pid_t				pid;
 
 	pid = getpid();
-	sa.__sigaction_u.__sa_handler = &handle_sigusr;
+	sa.sa_sigaction = &handle_sigusr;
 	ft_putstr_fd("server pid: ", 1);
 	ft_putnbr_fd(pid, 1);
 	ft_putchar_fd('\n', 1);

@@ -6,21 +6,32 @@
 /*   By: tzeck <tzeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:27:01 by tzeck             #+#    #+#             */
-/*   Updated: 2021/09/20 09:30:15 by tzeck            ###   ########.fr       */
+/*   Updated: 2021/09/21 12:09:34 by tzeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-#include <stdio.h>
-#include <string.h>
+
+void	handle_sigusr(int sig)
+{
+	(void)sig;
+	ft_putstr_fd("Server: signal received", 1);
+	ft_putchar_fd('\n', 1);
+}
 
 int	send_bit(int n, int pid)
 {
 	usleep(80);
 	if (n == 0)
+	{
 		kill(pid, SIGUSR1);
+		signal(SIGUSR1, handle_sigusr);
+	}
 	else if (n == 1)
+	{
 		kill(pid, SIGUSR2);
+		signal(SIGUSR1, handle_sigusr);
+	}
 	return (1);
 }
 
