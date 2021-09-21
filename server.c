@@ -6,7 +6,7 @@
 /*   By: tzeck <tzeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:26:57 by tzeck             #+#    #+#             */
-/*   Updated: 2021/09/21 12:09:39 by tzeck            ###   ########.fr       */
+/*   Updated: 2021/09/21 12:15:55 by tzeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ void	handle_sigusr(int sig, siginfo_t *info, void *context)
 		string = NULL;
 		i = 0;
 	}
-	if (i == 0)
-		kill(info->si_pid, SIGUSR1);
 }
 
 int	main(void)
