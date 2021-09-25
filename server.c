@@ -6,7 +6,7 @@
 /*   By: tzeck <tzeck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 10:26:57 by tzeck             #+#    #+#             */
-/*   Updated: 2021/09/21 12:15:55 by tzeck            ###   ########.fr       */
+/*   Updated: 2021/09/25 10:44:41 by tzeck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,11 @@ char	*string_alloc(char *string)
 	return (string);
 }
 
-void	handle_sigusr(int sig, siginfo_t *info, void *context)
+void	handle_sigusr(int sig)
 {
 	static int	i;
 	static char	*string;
 
-	(void)context;
 	if (string == NULL)
 		string = string_alloc(string);
 	if (i < 8)
@@ -80,7 +79,7 @@ int	main(void)
 	pid_t				pid;
 
 	pid = getpid();
-	sa.sa_sigaction = &handle_sigusr;
+	sa.__sigaction_u.__sa_handler = &handle_sigusr;
 	ft_putstr_fd("server pid: ", 1);
 	ft_putnbr_fd(pid, 1);
 	ft_putchar_fd('\n', 1);
